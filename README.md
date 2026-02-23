@@ -4,7 +4,6 @@ This repository documents the security hardening and maintenance work performed 
 
 The goal of this documentation is to demonstrate real-world troubleshooting, security configuration, and operational maintenance of a deployed web application.
 
-⸻
 
 Environment
 	•	Platform: WordPress (WooCommerce store)
@@ -14,7 +13,6 @@ Environment
 
 The website was deployed on a subdomain with low visitor traffic.
 
-⸻
 
 Initial Problem
 
@@ -28,7 +26,6 @@ Observed behavior:
 
 This indicated an operational failure rather than a security compromise.
 
-⸻
 
 Root Cause
 
@@ -41,7 +38,6 @@ Because the site was hosted on a subdomain with little traffic:
 	•	security scans stopped midway
 	•	shared hosting resource limits terminated the process
 
-⸻
 
 Issues Encountered
 
@@ -60,7 +56,6 @@ Hosting Resource Limits
 
 Long file scans were terminated automatically by the hosting environment.
 
-⸻
 
 Solutions Implemented
 
@@ -68,13 +63,12 @@ Solutions Implemented
 
 Configured the Wordfence Web Application Firewall and enabled protection mode.
 
-⸻
+
 
 2. Adjusted Scan Performance
 
 Changed scan mode to low-resource scanning and increased execution time limits.
 
-⸻
 
 3. Disabled WordPress Pseudo-Cron
 
@@ -84,7 +78,7 @@ define(‘DISABLE_WP_CRON’, true);
 
 This stopped unreliable browser-triggered scheduling.
 
-⸻
+
 
 4. Implemented Real Server Cron Job
 
@@ -96,7 +90,6 @@ Scheduled every 5 minutes.
 
 This allowed WordPress background tasks to run independently of visitors.
 
-⸻
 
 5. Increased PHP Limits
 
@@ -104,7 +97,7 @@ Server configuration was adjusted:
 	•	higher memory allocation
 	•	longer execution time
 
-⸻
+
 
 6. Security Configuration
 
@@ -122,7 +115,7 @@ Configured:
 
 Used Wordfence to verify and repair WordPress core files.
 
-⸻
+
 
 Results
 
@@ -134,7 +127,7 @@ After implementing server cron scheduling and adjusting scan settings:
 
 The “Scan Failed” notification was determined to be a browser session timeout, not an actual security failure.
 
-⸻
+
 
 Maintenance Tasks Now Performed
 	•	periodic malware scans
@@ -143,9 +136,8 @@ Maintenance Tasks Now Performed
 	•	security monitoring
 	•	file integrity verification
 
-⸻
 
-Evidence
+
 
 Screenshots in this repository include:
 	•	Wordfence dashboard
@@ -153,7 +145,7 @@ Screenshots in this repository include:
 	•	firewall activation
 	•	cron job configuration
 
-⸻
+
 
 Conclusion
 
