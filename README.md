@@ -162,16 +162,16 @@ The website now runs automated server-side security monitoring and protection.
 ## Implementation Evidence
 
 ### Wordfence Dashboard
-![Wordfence Dashboard](wordfence dashboard.png)
+![Wordfence Dashboard](wordfence-dashboard.png)
 
 ### Scan Results
-![Scan Results](scan result.png)
+![Scan Results](scan-result.png)
 
 ### Firewall Activated
-![Firewall Activated](firewall activated.png)
+![Firewall Activated](firewall-activated.png)
 
 ### Live Traffic Monitoring
-![Live Traffic](live traffic.png)
+![Live Traffic](live-traffic.png)
 
 ### Server Cron Job
 ![Cron Job](cron.png)
