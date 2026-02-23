@@ -90,7 +90,7 @@ This stopped unreliable browser-triggered scheduling.
 
 Created a server scheduled task:
 
-wget -q -O - “https://admin.sobaygadgets.com/wp-cron.php?doing_wp_cron” >/dev/null 2>&1
+wget -q -O - “https://admin.sample.com/wp-cron.php?doing_wp_cron” >/dev/null 2>&1
 
 Scheduled every 5 minutes.
 
