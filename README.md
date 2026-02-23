@@ -1,94 +1,166 @@
-# WordPress Security Hardening Guide
+WordPress Security Hardening & Maintenance Case Study
 
-This document describes the security measures I implement to protect WordPress business websites from unauthorized access, data breaches, and service disruption.
+This repository documents the security hardening and maintenance work performed on a production WordPress WooCommerce website.
 
-The goal is to secure customer data, login sessions, and payment activities.
+The goal of this documentation is to demonstrate real-world troubleshooting, security configuration, and operational maintenance of a deployed web application.
 
----
+⸻
 
-## 1. Login Protection
+Environment
+	•	Platform: WordPress (WooCommerce store)
+	•	Hosting: Shared hosting (subdomain deployment)
+	•	Security Tool: Wordfence Security Plugin
+	•	SSL: Enabled (HTTPS enforced)
 
-- Change default login URL
-- Limit login attempts
-- Enable CAPTCHA protection
-- Disable username enumeration
+The website was deployed on a subdomain with low visitor traffic.
 
-Purpose:
-Prevent brute-force login attacks.
+⸻
 
----
+Initial Problem
 
-## 2. User Role Management
+After installing Wordfence, the malware scan repeatedly failed.
 
-- Create administrator and editor roles
-- Restrict access permissions
-- Remove unused accounts
-- Enforce strong passwords
+Observed behavior:
+	•	Scan started normally
+	•	Thousands of files were indexed
+	•	Scan terminated before completion
+	•	No malware was detected
 
-Purpose:
-Reduce internal and external unauthorized access.
+This indicated an operational failure rather than a security compromise.
 
----
+⸻
 
-## 3. File Security
+Root Cause
 
-- Disable file editing in dashboard
-- Protect wp-config.php
-- Restrict directory browsing
-- Secure .htaccess rules
+WordPress uses a pseudo scheduling system called WP-Cron.
 
-This prevents attackers from modifying website files.
+WP-Cron only runs when someone visits the website.
 
----
+Because the site was hosted on a subdomain with little traffic:
+	•	scheduled tasks were not triggered
+	•	security scans stopped midway
+	•	shared hosting resource limits terminated the process
 
-## 4. SSL & Data Encryption
+⸻
 
-- Force HTTPS connection
-- Configure SSL certificate
-- Fix mixed content errors
-- Secure login sessions
+Issues Encountered
 
-Protects customer information and payment sessions.
+Wordfence Scan Failure
 
----
+Security scan could not complete due to:
+	•	PHP execution time limits
+	•	CPU restrictions on shared hosting
+	•	missing scheduled task triggers
 
-## 5. Firewall & Malware Protection
+Background Task Scheduling Failure
 
-- Install firewall security plugin
-- Configure malware scanning
-- Block suspicious IP addresses
-- Monitor login activity
+The website depended on browser visits to execute background security tasks.
 
-Purpose:
-Detect and stop intrusion attempts.
+Hosting Resource Limits
 
----
+Long file scans were terminated automatically by the hosting environment.
 
-## 6. Backup & Recovery
+⸻
 
-- Automated daily backups
-- Off-site backup storage
-- Restore testing
+Solutions Implemented
 
-Ensures business continuity if website is compromised.
+1. Firewall Optimization
 
----
+Configured the Wordfence Web Application Firewall and enabled protection mode.
 
-## 7. Update Management
+⸻
 
-- Update WordPress core
-- Update themes
-- Update plugins
-- Remove unused plugins
+2. Adjusted Scan Performance
 
-Prevents vulnerabilities caused by outdated software.
+Changed scan mode to low-resource scanning and increased execution time limits.
 
----
+⸻
 
-## 8. Monitoring & Maintenance
+3. Disabled WordPress Pseudo-Cron
 
-- Uptime monitoring
-- Error log monitoring
-- Performance monitoring
+Added to wp-config.php:
 
-Websites require ongoing maintenance after deployment.
+define(‘DISABLE_WP_CRON’, true);
+
+This stopped unreliable browser-triggered scheduling.
+
+⸻
+
+4. Implemented Real Server Cron Job
+
+Created a server scheduled task:
+
+wget -q -O - “https://admin.sobaygadgets.com/wp-cron.php?doing_wp_cron” >/dev/null 2>&1
+
+Scheduled every 5 minutes.
+
+This allowed WordPress background tasks to run independently of visitors.
+
+⸻
+
+5. Increased PHP Limits
+
+Server configuration was adjusted:
+	•	higher memory allocation
+	•	longer execution time
+
+⸻
+
+6. Security Configuration
+
+Configured:
+	•	login attempt protection
+	•	user role permissions
+	•	SSL enforcement
+	•	automatic updates monitoring
+	•	firewall monitoring
+	•	malware scanning
+
+⸻
+
+7. File Integrity Repair
+
+Used Wordfence to verify and repair WordPress core files.
+
+⸻
+
+Results
+
+After implementing server cron scheduling and adjusting scan settings:
+	•	scans completed in the background
+	•	no malware detected
+	•	firewall enabled
+	•	automated monitoring operational
+
+The “Scan Failed” notification was determined to be a browser session timeout, not an actual security failure.
+
+⸻
+
+Maintenance Tasks Now Performed
+	•	periodic malware scans
+	•	plugin updates
+	•	WordPress core updates
+	•	security monitoring
+	•	file integrity verification
+
+⸻
+
+Evidence
+
+Screenshots in this repository include:
+	•	Wordfence dashboard
+	•	scan results
+	•	firewall activation
+	•	cron job configuration
+
+⸻
+
+Conclusion
+
+This project demonstrates operational web development responsibilities beyond website design, including:
+	•	troubleshooting hosting limitations
+	•	configuring server-side scheduled processes
+	•	implementing security controls
+	•	maintaining a live production web application
+
+The website now runs automated server-side security monitoring and protection.
