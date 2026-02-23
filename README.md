@@ -109,7 +109,7 @@ Configured:
 	•	firewall monitoring
 	•	malware scanning
 
-⸻
+
 
 7. File Integrity Repair
 
@@ -156,3 +156,22 @@ This project demonstrates operational web development responsibilities beyond we
 	•	maintaining a live production web application
 
 The website now runs automated server-side security monitoring and protection.
+
+---
+
+## Implementation Evidence
+
+### Wordfence Dashboard
+![Wordfence Dashboard](wordfence dashboard.png)
+
+### Scan Results
+![Scan Results](scan result.png)
+
+### Firewall Activated
+![Firewall Activated](firewall activated.png)
+
+### Live Traffic Monitoring
+![Live Traffic](live traffic.png)
+
+### Server Cron Job
+![Cron Job](cron.png)
